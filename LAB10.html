@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LAB10</title>
+	<style type="text/css">
+		#container { width: 800px; }
+		ul { padding: 0;  margin: 0;}
+		li {
+  			padding: 0;
+  			float: left;
+  			margin: 10px;
+  			list-style: none;
+  			outline: solid;
+  			width: 150px;
+  			height: 150px;
+}
+
+		img { 
+ 			 width: 100%;
+ 			 height: 100%;
+			}
+			
+
+
+
+	</style>
+		
+	
+</head>
+<body>
+
+<div id = "container"></div>
+</body>
+
+<script type="text/javascript">
+var images= [];
+// get images, place them in an array & randomize the order
+for (var i = 0; i < 8; i++) { 
+	var rand = Math.floor(Math.random() * (8 - 1 + 1) + 1); 
+	var img = './doge' + rand + '.jpg';
+    images.push(img);
+    images.push(img);
+}
+randomizeImages();
+
+
+// output images then hide them
+var output = "<ol>"; 
+for (var i = 0; i < 16; i++) { 
+  output += "<li>";
+  output += "<img src = '" + images[i] + "' onclick='show(this)'/>";
+  output += "</li>";
+}
+output += "</ol>";
+document.getElementById("container").innerHTML = output;
+//hide everything
+for (var i = 0; i < 16; i++){
+	document.getElementsByTagName("img")[i].setAttribute("src", "./back.png");
+	document.getElementsByTagName("img")[i].setAttribute("id", i);
+}
+
+
+
+function randomizeImages(){ //Randomizer taken from https://codepen.io/jamesbarnett/pen/kiGsl
+  Array.prototype.randomize = function()
+  {
+    var i = this.length, j, temp;
+    while ( --i )
+    {
+      j = Math.floor( Math.random() * (i - 1) );
+      temp = this[i];
+      this[i] = this[j];
+      this[j] = temp;
+    }
+  };
+  
+  images.randomize();
+}
+var click = 0;
+var pos1 = 0;
+var pos2 = 0;
+
+function show(x){
+	click++;
+	if (click%2 == 1){
+	pos1 = x.id; // get index
+	console.log(pos1);
+	x.setAttribute("src", images[pos1]);
+	}
+
+	if (click%2 == 0){
+	pos2 = x.id;
+	console.log(pos2);
+	x.setAttribute("src", images[pos2]);
+		if(document.getElementsByTagName("img")[pos1].src != document.getElementsByTagName("img")[pos2].src){
+			setTimeout(function(){
+			document.getElementsByTagName("img")[pos1].setAttribute("src", "./back.png");
+			document.getElementsByTagName("img")[pos2].setAttribute("src", "./back.png");
+			}, 700);
+
+	    }
+	}
+
+	
+}
+
+//logic
+
+
+
+
+</script>
+
+</html>
